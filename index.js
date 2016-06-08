@@ -30,9 +30,7 @@ const initialState = {
 };
 
 const enhancer = compose(
-  process.env.NODE_ENV === 'production'
-    ? undefined
-    : applyMiddleware(logger),
+  applyMiddleware(logger),
   DevTools.instrument()
 );
 

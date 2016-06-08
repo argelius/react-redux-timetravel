@@ -2,12 +2,13 @@ import React from 'react';
 import {render} from 'react-dom';
 
 import {Provider} from 'react-redux';
-import {createStore, applyMiddleware} from 'redux';
+import {createStore, applyMiddleware, compose} from 'redux';
 import createLogger from 'redux-logger';
 import {AppContainer} from 'react-hot-loader';
 
 import grid from './reducers/grid';
 import App from './components/App';
+import DevTools from './containers/DevTools';
 
 const logger = createLogger();
 
@@ -28,20 +29,24 @@ const initialState = {
   ]
 };
 
-const store = createStore(grid,
-  initialState,
-  window.devToolsExtension ? window.devToolsExtension() : f => f,
+const enhancer = compose(
   process.env.NODE_ENV === 'production'
     ? undefined
-    : applyMiddleware(logger)
+    : applyMiddleware(logger),
+  DevTools.instrument()
 );
+
+const store = createStore(grid, initialState, enhancer);
 
 const rootElement = document.getElementById('root');
 
 render(
   <AppContainer>
     <Provider store={store}>
-      <App />
+      <div>
+        <App />
+        <DevTools />
+      </div>
     </Provider>
   </AppContainer>,
   rootElement
@@ -53,7 +58,10 @@ if (module.hot) {
     render(
       <AppContainer>
         <Provider store={store}>
-          <NextApp />
+          <div>
+            <NextApp />
+            <DevTools />
+          </div>
         </Provider>
       </AppContainer>,
       rootElement

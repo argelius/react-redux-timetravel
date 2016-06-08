@@ -91,7 +91,7 @@
 	  cells: [0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0]
 	};
 	
-	var enhancer = (0, _redux.compose)( true ? undefined : (0, _redux.applyMiddleware)(logger), _DevTools2.default.instrument());
+	var enhancer = (0, _redux.compose)((0, _redux.applyMiddleware)(logger), _DevTools2.default.instrument());
 	
 	var store = (0, _redux.createStore)(_grid2.default, initialState, enhancer);
 	

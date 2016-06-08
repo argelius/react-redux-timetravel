@@ -21862,10 +21862,21 @@
 	var grid = function grid(state, action) {
 	  switch (action.type) {
 	    case _actions.SET_GRID_SIZE:
+	      var newCells = new Array(action.width * action.height).fill(0);
+	
+	      /**
+	       * Copy previous picture.
+	       */
+	      for (var _y = 0; _y < state.height; _y++) {
+	        for (var _x = 0; _x < state.width; _x++) {
+	          newCells[_y * action.width + _x] = state.cells[_y * state.width + _x];
+	        }
+	      }
+	
 	      return _extends({}, state, {
 	        width: action.width,
 	        height: action.height,
-	        cells: new Array(action.width * action.height).fill(0)
+	        cells: newCells
 	      });
 	    case _actions.TOGGLE_CELL:
 	      var cells = [].concat(_toConsumableArray(state.cells));
@@ -21936,10 +21947,19 @@
 	
 	var _Grid2 = _interopRequireDefault(_Grid);
 	
+	var _SetSize = __webpack_require__(198);
+	
+	var _SetSize2 = _interopRequireDefault(_SetSize);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var App = function App() {
-	  return _react2.default.createElement(_Grid2.default, null);
+	  return _react2.default.createElement(
+	    'div',
+	    null,
+	    _react2.default.createElement(_Grid2.default, null),
+	    _react2.default.createElement(_SetSize2.default, null)
+	  );
 	};
 	
 	exports.default = App;
@@ -22108,6 +22128,97 @@
 	};
 	
 	exports.default = Cell;
+
+/***/ },
+/* 198 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _react = __webpack_require__(2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRedux = __webpack_require__(165);
+	
+	var _redux = __webpack_require__(172);
+	
+	var _actions = __webpack_require__(193);
+	
+	var Actions = _interopRequireWildcard(_actions);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var style = {
+	  margin: '10px 0'
+	};
+	
+	var SetSize = function SetSize(_ref) {
+	  var width = _ref.width;
+	  var height = _ref.height;
+	  var actions = _ref.actions;
+	
+	  var handleWidthChange = function handleWidthChange(e) {
+	    actions.setGridSize({
+	      width: parseInt(e.target.value),
+	      height: height
+	    });
+	  };
+	
+	  var handleHeightChange = function handleHeightChange(e) {
+	    actions.setGridSize({
+	      width: width,
+	      height: parseInt(e.target.value)
+	    });
+	  };
+	
+	  return _react2.default.createElement(
+	    'div',
+	    { style: style },
+	    _react2.default.createElement(
+	      'label',
+	      null,
+	      'Width ',
+	      _react2.default.createElement('input', {
+	        onChange: handleWidthChange,
+	        value: width,
+	        type: 'number',
+	        min: '0',
+	        max: '20' })
+	    ),
+	    _react2.default.createElement(
+	      'label',
+	      null,
+	      'Height ',
+	      _react2.default.createElement('input', {
+	        onChange: handleHeightChange,
+	        value: height,
+	        type: 'number',
+	        min: '0',
+	        max: '20' })
+	    )
+	  );
+	};
+	
+	var mapStateToProps = function mapStateToProps(state) {
+	  return _extends({}, state);
+	};
+	
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return {
+	    actions: (0, _redux.bindActionCreators)(Actions, dispatch)
+	  };
+	};
+	
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(SetSize);
 
 /***/ }
 /******/ ]);

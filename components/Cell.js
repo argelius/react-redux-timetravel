@@ -9,7 +9,10 @@ const style = {
 const Cell = ({children, filled = false, onClick}) => (
   <div
     onClick={onClick}
-    style={{...style, backgroundColor: filled ? 'black' : null}}
+    style={{
+      ...style,
+      backgroundColor: filled ? '#000' : '#fff'
+    }}
   >
     {children}
   </div>

@@ -6,6 +6,9 @@ import {
 const grid = (state, action) => {
   switch (action.type) {
     case SET_GRID_SIZE:
+      /**
+       * Create a new array.
+       */
       const newCells = new Array(action.width * action.height).fill(0);
 
       /**
@@ -17,6 +20,9 @@ const grid = (state, action) => {
         }
       }
 
+      /**
+       * Return new state.
+       */
       return {
         ...state,
         width: action.width,
@@ -24,12 +30,22 @@ const grid = (state, action) => {
         cells: newCells
       };
     case TOGGLE_CELL:
+      /**
+       * Copy cells.
+       */
       const cells = [...state.cells];
       const {x, y} = action;
+
       const val = cells[y * state.width + x];
 
+      /**
+       * Toggle the value.
+       */
       cells[y * state.width + x] = val === 1 ? 0 : 1;
 
+      /**
+       * Return the next state.
+       */
       return {
         ...state,
         cells

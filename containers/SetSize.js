@@ -10,6 +10,9 @@ const style = {
 
 const SetSize = ({width, height, actions}) => {
   const handleWidthChange = (e) => {
+    /**
+     * Set a new grid size.
+     */
     actions.setGridSize({
       width: parseInt(e.target.value),
       height
@@ -28,6 +31,10 @@ const SetSize = ({width, height, actions}) => {
       <label>
         Width&nbsp;
         <input
+          /**
+           * Execute a function when the
+           * cell is clicked.
+           */
           onChange={handleWidthChange}
           value={width}
           type='number'
@@ -47,16 +54,24 @@ const SetSize = ({width, height, actions}) => {
   );
 };
 
+/**
+ * Map the state to props.
+ */
 const mapStateToProps = (state) => ({
   ...state
 });
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    actions: bindActionCreators(Actions, dispatch)
-  };
-};
+/**
+ * Map the actions to props.
+ */
+const mapDispatchToProps = (dispatch) => ({
+  actions: bindActionCreators(Actions, dispatch)
+});
 
+/**
+ * Connect the component to
+ * the Redux Store.
+ */
 export default connect(
   mapStateToProps,
   mapDispatchToProps
